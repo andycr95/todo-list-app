@@ -1,20 +1,49 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title> Lista de Tareas </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item>
+    <ion-label>Filtrar por Categoría:</ion-label>
+    <ion-select [(ngModel)]="selectedCategoryId" (ionChange)="filterTasks()" interface="popover">
+      <ion-select-option [value]="null">Todas</ion-select-option>
+      <ion-select-option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-list>
+    <ion-item-sliding *ngFor="let task of filteredTasks">
+      <ion-item (click)="openEditTaskModal(task)">
+        <ion-label>
+          <h2>{{ task.title }}</h2>
+          <p *ngIf="task.categoryId">
+            Categoría:
+            {{ getCategoryName(task.categoryId) }}
+          </p>
+        </ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="task.completed" (ionChange)="completeTask(task)"></ion-checkbox>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteTask(task)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openAddTaskModal()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button expand="full" (click)="openManageCategoriesModal()">
+        Gestionar Categorías
+      </ion-button>
+    </ion-toolbar>
+  </ion-footer>
 </ion-content>
