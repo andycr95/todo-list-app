@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Editar Tarea</ion-title>
+    <ion-title>{{task.title}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="openAddSubTaskModal()">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">Cerrar</ion-button>
     </ion-buttons>
@@ -19,5 +24,39 @@
         }}</ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-button expand="full" (click)="updateTask()">Guardar Cambios</ion-button>
+  <ion-item>
+    <ion-label>Emoji</ion-label>
+    <ion-button style="font-size: 32px;" (click)="toggled = !toggled" interface="popover">
+      <ion-icon *ngIf="task.emoji === null" slot="icon-only" name="happy"></ion-icon>
+      <div slot="end" *ngIf="task.emoji !== null">
+        {{ task.emoji }}
+      </div>
+    </ion-button>
+    <emoji-mart *ngIf="toggled" class="emoji-mart" (emojiSelect)="handleSelection($event)"></emoji-mart>
+  </ion-item>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Subtareas</ion-label>
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let subTask of subTasks">
+      <ion-item>
+        <ion-checkbox slot="start" [(ngModel)]="subTask.completed"
+          (ionChange)="completeSubTask(subTask)"></ion-checkbox>
+        <ion-label>{{ subTask.title }}</ion-label>
+        <div style="font-size: 24px;" slot="end">
+          {{ subTask.emoji }}
+        </div>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteSubTask(subTask)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openAddSubTaskModal()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
