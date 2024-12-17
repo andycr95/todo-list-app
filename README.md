@@ -2,6 +2,13 @@
 
 Esta aplicación de lista de tareas es una herramienta simple pero poderosa para ayudarte a organizar tus actividades diarias, gestionar tus proyectos y mejorar tu productividad. Desarrollada con Ionic, Angular, Capacitor y Firebase, esta aplicación ofrece una experiencia de usuario fluida e intuitiva, con características avanzadas que la diferencian de las aplicaciones de lista de tareas tradicionales.
 
+## Capturas de la aplicación
+
+![Captura 1](./captures/capture1.png)
+![Captura 2](./captures/capture2.png)
+![Captura 3](./captures/capture3.png)
+![Captura 4](./captures/capture4.png)
+
 ## Características
 
 *   **Gestión de Tareas:**
