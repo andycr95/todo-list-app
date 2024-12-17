@@ -29,5 +29,9 @@
     </ion-button>
     <emoji-mart *ngIf="toggled" class="emoji-mart" (emojiSelect)="handleSelection($event)"></emoji-mart>
   </ion-item>
-  <ion-button expand="full" (click)="addTask()">Agregar</ion-button>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addTask()">
+      <ion-icon name="checkmark-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

@@ -15,7 +15,7 @@ export class AppComponent {
 
  async ngOnInit() {
     await this.appState.init();
-    this.selectedTheme = this.appState.getCurrentTheme() || 'blue-theme';
+   this.selectedTheme = this.appState.getCurrentTheme() || 'blue-theme';
   }
 
   onThemeChange() {

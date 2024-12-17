@@ -5,6 +5,7 @@ import { ManageCategoriesComponent } from '../manage-categories/manage-categorie
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AppState } from 'src/app/app-state';
 
 @Component({
   selector: 'app-configurations',
@@ -14,11 +15,14 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonicModule, FormsModule, CommonModule],
 })
-export class ConfigurationsComponent  implements OnInit {
+export class ConfigurationsComponent implements OnInit {
+  paletteToggle: boolean = false;
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController, private appState: AppState) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.paletteToggle = this.appState.getPaletteToggle();
+  }
 
   async openThemesModal() {
     const modal = await this.modalController.create({
@@ -26,7 +30,11 @@ export class ConfigurationsComponent  implements OnInit {
     });
     return await modal.present();
   }
-  
+
+  toggleChange(event: any) {
+    this.appState.toggleChange(event.detail.checked);
+  }
+
   async openCategoriesModal() {
     const modal = await this.modalController.create({
       component: ManageCategoriesComponent,

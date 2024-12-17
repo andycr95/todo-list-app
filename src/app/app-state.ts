@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage-angular';
 export class AppState {
     private renderer: Renderer2;
     private currentTheme: string | null = null;
+    private paletteToggle: boolean = false;
 
   constructor(
     private rendererFactory: RendererFactory2,
@@ -17,8 +18,10 @@ export class AppState {
 
   async init() {
     await this.storage.create();
-    this.currentTheme = await this.storage.get('selected-theme');      
+    this.currentTheme = await this.storage.get('selected-theme');   
+    this.paletteToggle = await this.storage.get('palette-toggle');
     this.applyTheme(this.currentTheme!);
+    this.toggleChange(this.paletteToggle);
   }
 
   applyTheme(themeName: string) {
@@ -33,5 +36,16 @@ export class AppState {
 
   getCurrentTheme(): string | null {
     return this.currentTheme;
+  }
+
+  getPaletteToggle(): boolean {
+    return this.paletteToggle;
+  }
+
+  toggleChange(ev: any) {
+    this.storage.set('palette-toggle', ev);
+    document.documentElement.classList.toggle('ion-palette-dark', ev);
+    document.documentElement.classList.toggle('ion-palette-light', !ev);
+    this.paletteToggle = ev;
   }
 }
