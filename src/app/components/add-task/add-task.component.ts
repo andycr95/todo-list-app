@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
@@ -28,11 +28,13 @@ export class AddTaskComponent  implements OnInit {
   constructor(
     private taskService: TaskService,
     private categoryService: CategoryService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
     this.categories = await this.categoryService.getCategories();
+    this.cdr.detectChanges();
   }
 
   async addTask() {

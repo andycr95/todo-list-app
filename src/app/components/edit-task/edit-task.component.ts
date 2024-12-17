@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { TaskService } from 'src/app/services/task.service';
@@ -23,11 +23,13 @@ export class EditTaskComponent  implements OnInit {
   constructor(
     private taskService: TaskService,
     private categoryService: CategoryService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
     this.categories = await this.categoryService.getCategories();
+    this.cdr.detectChanges();
   }
 
   async updateTask() {

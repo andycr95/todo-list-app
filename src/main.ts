@@ -5,7 +5,7 @@ import { IonicStorageModule, Storage } from '@ionic/storage-angular';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { addIcons } from 'ionicons';
-import { addOutline, trashOutline, createOutline } from 'ionicons/icons';
+import { addOutline, trashOutline, createOutline, settingsOutline } from 'ionicons/icons';
 import { environment } from './environments/environment';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -15,7 +15,8 @@ import { getRemoteConfig, provideRemoteConfig } from '@angular/fire/remote-confi
 addIcons({
   'add-outline': addOutline,
   'trash': trashOutline,
-  'create': createOutline
+  'create': createOutline,
+  'settings-outline': settingsOutline
 });
 
 if (environment.production) {

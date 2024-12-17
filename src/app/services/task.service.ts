@@ -7,22 +7,14 @@ import { generateId } from 'src/utils/generateIDs';
   providedIn: 'root'
 })
 export class TaskService {
-  private _storage: Storage | null = null;
   public tasksKey = 'tasks';
 
-  constructor(private storage: Storage) {
-    this.init();
-   }
-
-   async init() {
-    const storage = await this.storage.create();
-    this._storage = storage;
-   }
+  constructor(private storage: Storage) {}
   
   
   // Get all tasks
   async getTasks(): Promise<Task[]> {
-    return await this._storage?.get(this.tasksKey) || [];
+    return await this.storage.get(this.tasksKey) || [];
   }
 
   // Add a task
@@ -30,7 +22,7 @@ export class TaskService {
     const tasks = await this.getTasks();
     task.id = generateId();
     tasks.push(task);
-    await this._storage?.set(this.tasksKey, tasks);
+    await this.storage.set(this.tasksKey, tasks);
   }
 
   // Update a task
@@ -39,7 +31,7 @@ export class TaskService {
     const index = tasks.findIndex(t => t.id === task.id);
     if (index !== -1) {
       tasks[index] = task;
-      await this._storage?.set(this.tasksKey, tasks);
+      await this.storage.set(this.tasksKey, tasks);
     }
   }
 
@@ -47,6 +39,6 @@ export class TaskService {
   async deleteTask(taskId: string): Promise<void> {
     const tasks = await this.getTasks();
     const updatedTasks = tasks.filter(t => t.id !== taskId);
-    await this._storage?.set(this.tasksKey, updatedTasks);
+    await this.storage.set(this.tasksKey, updatedTasks);
   }
 }

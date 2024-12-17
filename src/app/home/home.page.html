@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> Lista de Tareas </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openManageCategoriesModal()">
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -16,8 +21,8 @@
   </ion-item>
   <ion-list>
     <ion-item-sliding *ngFor="let task of filteredTasks">
-      <ion-item (click)="openEditTaskModal(task)">
-        <ion-label>
+      <ion-item>
+        <ion-label (click)="openEditTaskModal(task)">
           <h2>{{ task.title }}</h2>
           <p *ngIf="task.categoryId">
             Categoría:
@@ -40,11 +45,4 @@
       <ion-icon name="add-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-footer>
-    <ion-toolbar>
-      <ion-button expand="full" (click)="openManageCategoriesModal()">
-        Gestionar Categorías
-      </ion-button>
-    </ion-toolbar>
-  </ion-footer>
 </ion-content>
