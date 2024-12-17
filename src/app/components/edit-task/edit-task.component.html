@@ -34,6 +34,14 @@
     </ion-button>
     <emoji-mart *ngIf="toggled" class="emoji-mart" (emojiSelect)="handleSelection($event)"></emoji-mart>
   </ion-item>
+  <ion-item>
+    <ion-label>Prioridad</ion-label>
+    <ion-select [(ngModel)]="task.priority" interface="popover">
+      <ion-select-option value="high">Alta</ion-select-option>
+      <ion-select-option value="medium">Media</ion-select-option>
+      <ion-select-option value="low">Baja</ion-select-option>
+    </ion-select>
+  </ion-item>
   <ion-list>
     <ion-list-header>
       <ion-label>Subtareas</ion-label>

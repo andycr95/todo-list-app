@@ -4,4 +4,5 @@ export interface Task {
   completed: boolean;
   categoryId: string | null;
   emoji: string | null;
+  priority?: 'high' | 'medium' | 'low' | null;
 }

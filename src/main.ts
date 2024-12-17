@@ -5,7 +5,7 @@ import { IonicStorageModule, Storage } from '@ionic/storage-angular';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { addIcons } from 'ionicons';
-import { addOutline, trashOutline, createOutline, settingsOutline, checkmarkOutline, happyOutline } from 'ionicons/icons';
+import { addOutline, trashOutline, createOutline, settingsOutline, checkmarkOutline, happyOutline, swapVerticalOutline, flagOutline } from 'ionicons/icons';
 import { environment } from './environments/environment';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -18,7 +18,9 @@ addIcons({
   'create': createOutline,
   'settings-outline': settingsOutline,
   'checkmark-outline': checkmarkOutline,
-  'happy': happyOutline
+  'happy': happyOutline,
+  'swap-vertical': swapVerticalOutline,
+  'flag': flagOutline
 });
 
 if (environment.production) {

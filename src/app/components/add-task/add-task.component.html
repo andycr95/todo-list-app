@@ -20,6 +20,14 @@
     </ion-select>
   </ion-item>
   <ion-item>
+    <ion-label>Prioridad</ion-label>
+    <ion-select [(ngModel)]="newTask.priority" interface="popover">
+      <ion-select-option value="high">Alta</ion-select-option>
+      <ion-select-option value="medium">Media</ion-select-option>
+      <ion-select-option value="low">Baja</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
     <ion-label>Emoji</ion-label>
     <ion-button style="font-size: 32px;" (click)="toggled = !toggled">
       <ion-icon *ngIf="newTask.emoji === null" slot="icon-only" name="happy"></ion-icon>
