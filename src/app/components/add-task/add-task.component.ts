@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule, ModalController, ToastController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Task } from 'src/app/models/task.model';
@@ -38,7 +38,8 @@ export class AddTaskComponent  implements OnInit {
     private taskService: TaskService,
     private categoryService: CategoryService,
     private modalController: ModalController,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private toastController: ToastController
   ) {}
 
   async ngOnInit() {
@@ -51,6 +52,9 @@ export class AddTaskComponent  implements OnInit {
   }
 
   async addTask() {
+    if (this.newTask.title === '') {
+      return this.presentToast('El título es requerido');
+    }
     if (this.isSubTask) {
       this.newTask.taskId = this.taskId;
       const subTask: subTask = {
@@ -81,5 +85,13 @@ export class AddTaskComponent  implements OnInit {
 
   closeModal() {
     this.modalController.dismiss();
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    await toast.present();
   }
 }
