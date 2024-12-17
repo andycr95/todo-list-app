@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { TaskService } from 'src/app/services/task.service';
@@ -12,6 +12,7 @@ import { CategoryService } from 'src/app/services/category.service';
   templateUrl: './edit-task.component.html',
   styleUrls: ['./edit-task.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonicModule, FormsModule, CommonModule],
 })
 export class EditTaskComponent  implements OnInit {

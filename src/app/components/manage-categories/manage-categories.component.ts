@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
@@ -10,6 +10,7 @@ import { Category } from '../../models/category.model';
   templateUrl: './manage-categories.component.html',
   styleUrls: ['./manage-categories.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonicModule, FormsModule, CommonModule],
 })
 export class ManageCategoriesComponent implements OnInit {

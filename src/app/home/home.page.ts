@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
-  IonicModule,
   ModalController,
 } from '@ionic/angular';
 import { TaskService } from '../services/task.service';
@@ -9,7 +7,6 @@ import { Task } from '../models/task.model';
 import { AddTaskComponent } from '../components/add-task/add-task.component';
 import { EditTaskComponent } from '../components/edit-task/edit-task.component';
 import { ManageCategoriesComponent } from '../components/manage-categories/manage-categories.component';
-import { FormsModule } from '@angular/forms';
 import { Category } from '../models/category.model';
 import { CategoryService } from '../services/category.service';
 import { RemoteConfigService } from '../services/remote-config.service';
@@ -18,8 +15,7 @@ import { RemoteConfigService } from '../services/remote-config.service';
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePage implements OnInit {
   public tasks: Task[] = [];
@@ -33,7 +29,8 @@ export class HomePage implements OnInit {
     private modalController: ModalController,
     private categoryService: CategoryService,
     private remoteConfigService: RemoteConfigService) { }
-
+  
+  
   async ngOnInit(): Promise<void> {
     this.loadTasks();
     this.editTaskFeatureFlag = await this.remoteConfigService.getFeatureBooleanFlag('edit_task');
@@ -105,4 +102,5 @@ export class HomePage implements OnInit {
   getCategoryName(categoryId: string): string {
     return this.categories.find(c => c.id === categoryId)?.name || 'Sin categoría';
   }
+
 }
