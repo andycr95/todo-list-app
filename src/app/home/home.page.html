@@ -5,6 +5,53 @@
       <ion-button (click)="openConfigurationsModal()">
         <ion-icon name="settings-outline"></ion-icon>
       </ion-button>
+      <ion-button id="filter-priority-button">
+        <ion-icon slot="icon-only" name="flag"></ion-icon>
+      </ion-button>
+      <ion-popover trigger="filter-priority-button" side="bottom" alignment="end">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-radio-group [(ngModel)]="selectedPriority" (ionChange)="filterTasks()">
+                <ion-item>
+                  <ion-label>Todas</ion-label>
+                  <ion-radio [value]="null"></ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Alta</ion-label>
+                  <ion-radio value="high"></ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Media</ion-label>
+                  <ion-radio value="medium"></ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Baja</ion-label>
+                  <ion-radio value="low"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+
+      <ion-button id="sort-button" (click)="sortPopover($event)">
+        <ion-icon slot="icon-only" name="swap-vertical"></ion-icon>
+      </ion-button>
+      <ion-popover trigger="sort-button" side="bottom" alignment="end">
+        <ng-template>
+          <ion-content>
+            <ion-list>
+              <ion-item (click)="sortTasks('priority')">
+                <ion-label>Prioridad</ion-label>
+              </ion-item>
+              <ion-item (click)="sortTasks('title')">
+                <ion-label>Título</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

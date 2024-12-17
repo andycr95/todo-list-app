@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   ModalController,
+  PopoverController
 } from '@ionic/angular';
 import { TaskService } from '../services/task.service';
 import { Task } from '../models/task.model';
@@ -25,11 +26,13 @@ export class HomePage implements OnInit {
   selectedCategoryId: string | null = null;
   editTaskFeatureFlag: boolean = false;
   deleteTaskFeatureFlag: boolean = false;
+  selectedPriority: string | null = null;
 
   constructor(private taskService: TaskService,
     private modalController: ModalController,
     private categoryService: CategoryService,
     private remoteConfigService: RemoteConfigService,
+    private popoverController: PopoverController,
     private cdr: ChangeDetectorRef) { }
   
   
@@ -102,11 +105,65 @@ export class HomePage implements OnInit {
     } else {
       this.filteredTasks = [...this.tasks];
     }
+    if (this.selectedPriority) {
+      this.filteredTasks = this.filteredTasks.filter(
+        (task) => task.priority === this.selectedPriority
+      );
+    }
+  }
+
+  sortTasks(criteria: string) {
+    if (criteria === 'priority') {
+      this.filteredTasks.sort((a, b) => {
+        const priorityOrder = ['high', 'medium', 'low'];
+        return (
+          priorityOrder.indexOf(a.priority || '') -
+          priorityOrder.indexOf(b.priority || '')
+        );
+      });
+    } else if (criteria === 'title') {
+      this.filteredTasks.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    this.popoverController.dismiss();
   }
 
   getCategoryName(categoryId: any): string {
     if (categoryId == null) return 'Sin categoría';
     return this.categories.find(c => c.id === categoryId)?.name || 'Sin categoría';
+  }
+
+  getPriorityColor(priority: string): string {
+    switch (priority) {
+        case 'high':
+            return 'red';
+        case 'medium':
+            return 'orange';
+        case 'low':
+            return 'green';
+      default:
+        return 'black';
+    }
+  }
+
+    async sortPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: 'ion-popover',
+      event: ev,
+      translucent: true,
+      componentProps: {
+        options: [
+          { label: 'Prioridad', value: 'priority' },
+          { label: 'Título', value: 'title' },
+        ],
+      },
+    });
+
+    await popover.present();
+
+    const { data } = await popover.onDidDismiss();
+    if (data) {
+      this.sortTasks(data);
+    }
   }
 
 }
