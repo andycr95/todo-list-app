@@ -12,6 +12,7 @@ import { ManageCategoriesComponent } from '../components/manage-categories/manag
 import { FormsModule } from '@angular/forms';
 import { Category } from '../models/category.model';
 import { CategoryService } from '../services/category.service';
+import { RemoteConfigService } from '../services/remote-config.service';
 
 @Component({
   selector: 'app-home',
@@ -25,11 +26,17 @@ export class HomePage implements OnInit {
   public filteredTasks: Task[] = [];
   public categories: Category[] = [];
   public selectedCategoryId: string | null = null;
+  public editTaskFeatureFlag: boolean = false;
+  public deleteTaskFeatureFlag: boolean = false;
 
-  constructor(private taskService: TaskService,private modalController: ModalController, private categoryService: CategoryService) {}
+  constructor(private taskService: TaskService,
+    private modalController: ModalController,
+    private categoryService: CategoryService,
+    private remoteConfigService: RemoteConfigService) { }
 
   async ngOnInit(): Promise<void> {
     this.loadTasks();
+    this.editTaskFeatureFlag = await this.remoteConfigService.getFeatureBooleanFlag('edit_task');
   }
 
   async loadTasks() {
@@ -51,14 +58,16 @@ export class HomePage implements OnInit {
   }
 
   async openEditTaskModal(task: Task) {
-    const modal = await this.modalController.create({
-      component: EditTaskComponent,
-      componentProps: { task },
-    });
-    modal.onDidDismiss().then(() => {
-      this.loadTasks();
-    });
-    return await modal.present();
+    if (this.editTaskFeatureFlag) {
+      const modal = await this.modalController.create({
+        component: EditTaskComponent,
+        componentProps: { task },
+      });
+      modal.onDidDismiss().then(() => {
+        this.loadTasks();
+      });
+      return await modal.present();
+    }
   }
 
   async openManageCategoriesModal() {
@@ -69,13 +78,18 @@ export class HomePage implements OnInit {
   }
 
   async completeTask(task: Task) {
-    console.log(task);
-    await this.taskService.updateTask(task);
+    if (this.editTaskFeatureFlag) {
+      await this.taskService.updateTask(task);
+    }
   }
 
   async deleteTask(task: Task) {
-    await this.taskService.deleteTask(task.id);
-    this.loadTasks();
+    if (this.deleteTaskFeatureFlag) {
+      await this.taskService.deleteTask(task.id);
+      this.loadTasks();
+    } else {
+      alert('La funcionalidad de eliminar tareas no está disponible en este momento.');
+    }
   }
 
   filterTasks() {
