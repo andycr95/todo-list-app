@@ -103,7 +103,8 @@ export class HomePage implements OnInit {
     }
   }
 
-  getCategoryName(categoryId: string): string {
+  getCategoryName(categoryId: any): string {
+    if (categoryId == null) return 'Sin categoría';
     return this.categories.find(c => c.id === categoryId)?.name || 'Sin categoría';
   }
 

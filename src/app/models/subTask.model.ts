@@ -1,7 +1,7 @@
-export interface Task {
+export interface subTask {
   id: string;
   title: string;
   completed: boolean;
-  categoryId: string | null;
+  taskId: string;
   emoji: string | null;
 }

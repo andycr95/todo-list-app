@@ -5,7 +5,7 @@ import { IonicStorageModule, Storage } from '@ionic/storage-angular';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { addIcons } from 'ionicons';
-import { addOutline, trashOutline, createOutline, settingsOutline } from 'ionicons/icons';
+import { addOutline, trashOutline, createOutline, settingsOutline, checkmarkOutline, happyOutline } from 'ionicons/icons';
 import { environment } from './environments/environment';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -16,7 +16,9 @@ addIcons({
   'add-outline': addOutline,
   'trash': trashOutline,
   'create': createOutline,
-  'settings-outline': settingsOutline
+  'settings-outline': settingsOutline,
+  'checkmark-outline': checkmarkOutline,
+  'happy': happyOutline
 });
 
 if (environment.production) {
@@ -28,6 +30,7 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    importProvidersFrom(IonicStorageModule.forRoot()), provideFirebaseApp(() => initializeApp(environment.firebase)), provideRemoteConfig(() => getRemoteConfig()),
+    importProvidersFrom(IonicStorageModule.forRoot()),
+    provideFirebaseApp(() => initializeApp(environment.firebase)), provideRemoteConfig(() => getRemoteConfig()),
   ],
 });

@@ -9,15 +9,25 @@
 <ion-content>
   <ion-item>
     <ion-label position="floating">Título</ion-label>
-    <ion-input [(ngModel)]="task.title"></ion-input>
+    <ion-input [(ngModel)]="newTask.title"></ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="!isSubTask">
     <ion-label>Categoría</ion-label>
-    <ion-select [(ngModel)]="task.categoryId" interface="popover">
+    <ion-select [(ngModel)]="newTask.categoryId" interface="popover">
       <ion-select-option [value]="null">Sin Categoría</ion-select-option>
       <ion-select-option *ngFor="let category of categories" [value]="category.id">{{ category.name
         }}</ion-select-option>
     </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Emoji</ion-label>
+    <ion-button style="font-size: 32px;" (click)="toggled = !toggled">
+      <ion-icon *ngIf="newTask.emoji === null" slot="icon-only" name="happy"></ion-icon>
+      <div slot="end" *ngIf="newTask.emoji !== null">
+        {{ newTask.emoji }}
+      </div>
+    </ion-button>
+    <emoji-mart *ngIf="toggled" class="emoji-mart" (emojiSelect)="handleSelection($event)"></emoji-mart>
   </ion-item>
   <ion-button expand="full" (click)="addTask()">Agregar</ion-button>
 </ion-content>
