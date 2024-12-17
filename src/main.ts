@@ -6,8 +6,10 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { addIcons } from 'ionicons';
 import { addOutline, trashOutline, createOutline } from 'ionicons/icons';
-import { environment } from './environments/environment.prod';
+import { environment } from './environments/environment';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getRemoteConfig, provideRemoteConfig } from '@angular/fire/remote-config';
 
 // Registrar los iconos
 addIcons({
@@ -25,6 +27,6 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    importProvidersFrom(IonicStorageModule.forRoot()),
+    importProvidersFrom(IonicStorageModule.forRoot()), provideFirebaseApp(() => initializeApp(environment.firebase)), provideRemoteConfig(() => getRemoteConfig()),
   ],
 });
