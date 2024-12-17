@@ -6,10 +6,11 @@ import { TaskService } from '../services/task.service';
 import { Task } from '../models/task.model';
 import { AddTaskComponent } from '../components/add-task/add-task.component';
 import { EditTaskComponent } from '../components/edit-task/edit-task.component';
-import { ManageCategoriesComponent } from '../components/manage-categories/manage-categories.component';
 import { Category } from '../models/category.model';
 import { CategoryService } from '../services/category.service';
 import { RemoteConfigService } from '../services/remote-config.service';
+import { AppState } from '../app-state';
+import { ConfigurationsComponent } from '../components/configurations/configurations.component';
 
 @Component({
   selector: 'app-home',
@@ -68,9 +69,9 @@ export class HomePage implements OnInit {
     }
   }
 
-  async openManageCategoriesModal() {
+  async openConfigurationsModal() {
     const modal = await this.modalController.create({
-      component: ManageCategoriesComponent,
+      component: ConfigurationsComponent,
     });
     modal.onDidDismiss().then(() => {
       this.loadTasks();

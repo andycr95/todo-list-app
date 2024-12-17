@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Configuración de Tema</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list *ngIf="selectedTheme !== null">
+    <ion-radio-group [(ngModel)]="selectedTheme" (ionChange)="onThemeChange()">
+      <ion-item *ngFor="let theme of themes">
+        <ion-label>{{ theme }}</ion-label>
+        <ion-radio slot="start" [value]="theme"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>
