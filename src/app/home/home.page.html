@@ -28,6 +28,9 @@
             Categoría:
             {{ getCategoryName(task.categoryId) }}
           </p>
+          <p *ngIf="task.priority">
+            Prioridad: {{ task.priority === 'high' ? 'Alta' : task.priority === 'medium' ? 'Media' : 'Baja' }}
+          </p>
         </ion-label>
         <ion-checkbox slot="start" [disabled]="!editTaskFeatureFlag" [(ngModel)]="task.completed"
           (ionChange)="completeTask(task)"></ion-checkbox>

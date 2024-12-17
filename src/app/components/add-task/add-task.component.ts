@@ -29,6 +29,7 @@ export class AddTaskComponent  implements OnInit {
     emoji: null,
     categoryId: null,
     taskId: '',
+    priority: 'medium',
   };
 
   @Input() taskId!: string;
@@ -72,6 +73,7 @@ export class AddTaskComponent  implements OnInit {
         completed: false,
         categoryId: this.newTask.categoryId,
         emoji: this.newTask.emoji,
+        priority: this.newTask.priority as 'high' | 'medium' | 'low',
       };
       await this.taskService.addTask(task);
     }
