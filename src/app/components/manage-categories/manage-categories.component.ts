@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
@@ -10,6 +10,7 @@ import { Category } from '../../models/category.model';
   templateUrl: './manage-categories.component.html',
   styleUrls: ['./manage-categories.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonicModule, FormsModule, CommonModule],
 })
 export class ManageCategoriesComponent implements OnInit {
@@ -19,7 +20,8 @@ export class ManageCategoriesComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -28,15 +30,16 @@ export class ManageCategoriesComponent implements OnInit {
 
   async loadCategories() {
     this.categories = await this.categoryService.getCategories();
+    this.cdr.detectChanges();
   }
 
   async addCategory() {
     if (this.editingCategory) {
-      // Actualizar categoría existente
+      this.editingCategory.name = this.newCategory.name;
       await this.categoryService.updateCategory(this.editingCategory);
       this.editingCategory = null;
     } else {
-      // Agregar nueva categoría
+      console.log('Adding new category', this.newCategory);
       await this.categoryService.addCategory(this.newCategory);
     }
     this.newCategory = { id: '', name: '' };

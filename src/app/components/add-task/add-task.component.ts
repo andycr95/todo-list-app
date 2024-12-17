@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import { CategoryService } from 'src/app/services/category.service';
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonicModule, FormsModule, CommonModule],
 })
 export class AddTaskComponent  implements OnInit {
@@ -27,11 +28,13 @@ export class AddTaskComponent  implements OnInit {
   constructor(
     private taskService: TaskService,
     private categoryService: CategoryService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
     this.categories = await this.categoryService.getCategories();
+    this.cdr.detectChanges();
   }
 
   async addTask() {
