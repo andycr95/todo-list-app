@@ -24,7 +24,8 @@
             {{ getCategoryName(task.categoryId) }}
           </p>
         </ion-label>
-        <ion-checkbox slot="start" [(ngModel)]="task.completed" (ionChange)="completeTask(task)"></ion-checkbox>
+        <ion-checkbox slot="start" [disabled]="!editTaskFeatureFlag" [(ngModel)]="task.completed"
+          (ionChange)="completeTask(task)"></ion-checkbox>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="deleteTask(task)">
