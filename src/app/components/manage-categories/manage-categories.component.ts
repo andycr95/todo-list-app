@@ -39,7 +39,6 @@ export class ManageCategoriesComponent implements OnInit {
       await this.categoryService.updateCategory(this.editingCategory);
       this.editingCategory = null;
     } else {
-      console.log('Adding new category', this.newCategory);
       await this.categoryService.addCategory(this.newCategory);
     }
     this.newCategory = { id: '', name: '' };
